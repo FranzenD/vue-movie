@@ -14,8 +14,9 @@
 
 <script>
 import axios from "axios";
+import config from '@/config';
 
-const baseApiUrl = "http://www.omdbapi.com/?apikey=bca47ba&";
+const baseApiUrl = "http://www.omdbapi.com/?apikey=";
 
 export default {
   name: "MovieSearch",
@@ -28,7 +29,7 @@ export default {
   props: {},
   methods: {
     searchMovie() {
-      let url = baseApiUrl + "s=" + this.searchString;
+      let url = baseApiUrl + config.apiKey + "&s=" + this.searchString;
       let result = axios
         .get(url)
         .then(response => (this.searchResult = response.data))
