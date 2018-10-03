@@ -23,7 +23,7 @@ export default new Router({
     },
     {
       path: '/details/:id',
-      name: 'details',
+      name: 'moviedetails',
       component: () => import(/* webpackChunkName: "details" */ './views/Details.vue')
     }
   ]

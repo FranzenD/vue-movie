@@ -10,7 +10,7 @@
                 <img :src='result.Poster' />
             </div>
             <div class='movie__title'>
-                <router-link :to="{name: 'details', params: {id: result.imdbID}}">{{result.Title}}</router-link>
+                <router-link :to="{name: 'moviedetails', params: {id: result.imdbID}}">{{result.Title}}</router-link>
             </div>
         </div>                    
     </div>

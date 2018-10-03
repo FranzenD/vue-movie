@@ -6,7 +6,7 @@
 import MovieDetails from "@/components/MovieDetails.vue";
 
 export default {
-  name: "details",
+  name: "moviedetails",
   components: {
     MovieDetails
   }
