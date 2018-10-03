@@ -10,7 +10,7 @@
                 <img :src='result.Poster' />
             </div>
             <div class='movie__title'>
-                {{result.Title}}
+                <router-link :to="{name: 'details', params: {id: result.imdbID}}">{{result.Title}}</router-link>
             </div>
         </div>                    
     </div>
@@ -21,8 +21,6 @@
 <script>
 import axios from "axios";
 import config from "@/config";
-
-const baseApiUrl = "http://www.omdbapi.com/?apikey=";
 
 export default {
   name: "MovieSearch",
@@ -36,7 +34,7 @@ export default {
   props: {},
   methods: {
     searchMovie() {
-      let url = baseApiUrl + config.apiKey + "&s=" + this.searchString;
+      let url = config.baseApiUrl + config.apiKey + "&s=" + this.searchString;
       axios
         .get(url)
         .then(response => (this.searchResult = response.data))
@@ -49,16 +47,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$shadow-color: #a4a8ac;
+
 .movie-search {
   & input {
     padding: 10px;
     font-size: 20px;
   }
 }
-.search-result{
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-gap: 20px;
+.search-result {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 20px;
+  padding: 20px 40px 20px 20px;
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: 33% 33% 33%;
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 100%;
+  }
 }
 .movie {
   text-align: left;
@@ -66,6 +75,8 @@ export default {
   grid-template-columns: 100px auto;
   grid-gap: 10px;
   padding: 10px;
+  border: solid 1px $shadow-color;
+  box-shadow: $shadow-color 5px 5px 5px 2px;
 
   &__poster {
     img {
@@ -74,8 +85,15 @@ export default {
     }
   }
   &__title {
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-family: Arial, Helvetica, sans-serif;
+
+    @media screen and (min-width: 1024px) {
+      font-size: 1.5rem;
+    }
+    @media screen and (max-width: 768px) {
+      font-size: 2rem;
+    }
   }
 }
 </style>
