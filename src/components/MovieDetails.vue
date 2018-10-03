@@ -23,7 +23,7 @@ export default {
   props: {
     propMovieId: String
   },
-  mounted(){
+  created(){
       let url = config.baseApiUrl + config.apiKey + '&i=' + this.movieId;
       axios.get(url)
       .then(response => this.movie = response.data)
@@ -34,6 +34,6 @@ export default {
 
 <style lang="scss" scoped>
 .movie {
-  text-align: center;
+  //text-align: center;
 }
 </style>

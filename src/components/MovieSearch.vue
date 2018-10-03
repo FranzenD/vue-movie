@@ -87,6 +87,7 @@ $shadow-color: #a4a8ac;
   &__title {
     font-size: 1.7rem;
     font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
 
     @media screen and (min-width: 1024px) {
       font-size: 1.5rem;
