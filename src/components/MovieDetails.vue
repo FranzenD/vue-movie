@@ -1,19 +1,23 @@
-<template>
-    
-        <div v-if='error' class="error">{{error}}</div>
-        <div v-else>
-          <div class="movie">
-          <section class="movie__title">
-            {{movie.Title}}            
-          </section>       
-          <section class="movie__poster">
-            <img :src="movie.Poster" class="img-responsive"/>
-          </section>   
-          <section class="movie__details">
-            {{movie.Plot}}    
-          </section> 
-        </div>
-    </div>
+<template>  
+<div class="details"> 
+  <div v-if='error' class="error">{{error}}</div>
+  <div v-if="showError">
+    {{movie.Error}}
+  </div>
+  <div v-else>
+    <div class="movie">
+    <section class="movie__title">
+      {{movie.Title}}            
+    </section>       
+    <section class="movie__poster">
+      <img :src="movie.Poster" class="img-responsive"/>
+    </section>   
+    <section class="movie__details">
+      {{movie.Plot}}    
+    </section> 
+  </div>
+  </div>
+  </div> 
 </template>
 
 <script>
@@ -32,6 +36,11 @@ export default {
   props: {
     propMovieId: String
   },
+  computed:{
+    showError() {
+      return this.movie.Response && this.movie.Response ==='False';
+    }
+  },
   created() {
     let url = config.baseApiUrl + config.apiKey + "&i=" + this.movieId;
     axios
@@ -43,7 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$borderColor: #a4a8ac;
+
 .movie {
   margin-top: 50px;
   display: grid;
@@ -56,7 +65,7 @@ $borderColor: #a4a8ac;
 
   &__title {
     grid-area: header;
-    font-size: 32px;  
+    font-size: 32px;
   }
 
   &__details {

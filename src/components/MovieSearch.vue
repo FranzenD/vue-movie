@@ -2,24 +2,36 @@
 <div class="moogle">
   <div class="search-field">
   <div class="movie-search">
-    <input type="search" class="movie-search__input" v-model="searchString" @keyup.enter="searchMovie" />
-    <button type="button" class="movie-search__button" @click="searchMovie">Sök</button>
+    <input type="search" class="movie-search__input" v-model="searchString" @keyup.enter="searchMovie()" />
+    <button type="button" class="movie-search__button" @click="searchMovie()">Sök</button>
   </div>
   </div>
 
     <div v-if="error" class="error">{{error}}</div>
-    <div v-if="searchResult.Response && !JSON.parse(searchResult.Response.toLowerCase())" class="error">
+    <div v-if="hasError" class="error">
       {{searchResult.Error}}
     </div>
-    <div v-if="searchResult && searchResult.Search" class="search-result">
-      <div v-for="(result, index) in searchResult.Search" :key="index" class="movie">
-        <div class='movie__poster'>
-          <img :src='result.Poster' />
-        </div>
-        <div class='movie__title'>
-          <router-link :to="{name: 'moviedetails', params: {id: result.imdbID}}">{{result.Title}}</router-link>
+    <div v-if="searchResult && searchResult.Search">      
+      <div class="search-result">
+        <div v-for="(result, index) in searchResult.Search" :key="index" class="movie">
+          <div class='movie__poster'>
+            <img :src='result.Poster' />
+          </div>
+          <div class='movie__title'>
+            <router-link :to="{name: 'moviedetails', params: {id: result.imdbID}}">{{result.Title}}</router-link>
+          </div>
         </div>
       </div>
+      <section class="pager__container">  
+        <span>Page:</span>      
+          <span v-for="pageNumber in totalPages" v-bind:key="pageNumber" 
+            @click="searchMovie(pageNumber)" 
+            class="pager" 
+            :class="{'pager--active':pageNumber === page}">
+              {{pageNumber}}
+          </span>
+      </section>
+      <div class="leader">Number of hits: {{searchResult.totalResults}}</div>
     </div>
   </div>
 </template>
@@ -28,19 +40,29 @@
 import axios from "axios";
 import config from "@/config";
 
+const pageSize = 10;
+
 export default {
   name: "MovieSearch",
   data() {
     return {
       searchString: "",
       searchResult: {},
-      error: ""
+      error: "",
+      page: 1
     };
   },
   props: {},
   methods: {
-    searchMovie() {
-      let url = config.baseApiUrl + config.apiKey + "&s=" + this.searchString;
+    searchMovie(page) {
+      this.page = page || 1;
+      let url =
+        config.baseApiUrl +
+        config.apiKey +
+        "&s=" +
+        this.searchString +
+        "&page=" +
+        page;
       axios
         .get(url)
         .then(response => (this.searchResult = response.data))
@@ -49,14 +71,38 @@ export default {
         });
     }
   },
-  computed: {}
+  computed: {
+    hasError() {
+      return (
+        this.searchResult.Response &&
+        !JSON.parse(this.searchResult.Response.toLowerCase())
+      );
+    },
+    totalPages() {
+      if (JSON.parse(this.searchResult.Response.toLowerCase())) {
+        let pages = Math.ceil(
+          Number(this.searchResult.totalResults) / pageSize
+        );
+        return pages;
+      }
+      return 1;
+    }
+  },
+  watch:{
+    searchString(newValue, oldValue){
+      //Reset page to 1 if new search is made.
+      if(newValue !== oldValue){
+        this.page = 1;
+      }
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-$shadowColor: #a4a8ac;
-.search-field{
-  display:flex;
+
+.search-field {
+  display: flex;
   justify-content: center;
 }
 
@@ -137,6 +183,21 @@ $shadowColor: #a4a8ac;
     @media screen and (max-width: 768px) {
       font-size: 2rem;
     }
+  }
+}
+
+.pager {
+  &__container {
+    text-align: left;
+  }
+
+  cursor: pointer;
+  box-sizing: border-box;
+  margin-right: 5px;
+  
+  &--active {
+    font-size: x-large;
+    font-weight: bold;
   }
 }
 </style>

@@ -9,10 +9,6 @@
 </template>
 
 <style lang="scss">
-$errorColor: rgb(250, 89, 89);
-$shadowColor: #a4a8ac;
-$borderColor: #a4a8ac;
-
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -30,5 +26,18 @@ $borderColor: #a4a8ac;
 .img-responsive {
   max-width: 100%;
   height: auto;
+}
+
+.trailer {
+  margin-bottom: 20px;
+  &--small {
+    margin-bottom: 10px;
+  }
+}
+.leader {
+  margin-top: 20px;
+  &--small {
+    margin-top: 10px;
+  }
 }
 </style>
