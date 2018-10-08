@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <movie-search></movie-search>
+    <div class="hero">
+    <h1>Sigma movie search</h1>
+    </div>  
+    <movie-search></movie-search>  
   </div>
 </template>
 
@@ -16,3 +18,24 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  height: 300px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background-image: url('../assets/board-cinema-cinematography-274937.jpg');
+  background-size: cover;
+
+  & h1{
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+    padding: 10px;
+  }
+}
+</style>

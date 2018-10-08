@@ -3,7 +3,7 @@
   <div class="search-field">
   <div class="movie-search">
     <input type="search" class="movie-search__input" v-model="searchString" @keyup.enter="searchMovie()" />
-    <button type="button" class="movie-search__button" @click="searchMovie()">Sök</button>
+    <button type="button" class="movie-search__button" @click="searchMovie()">Search</button>
   </div>
   </div>
 
@@ -59,13 +59,18 @@ export default {
       let url =
         config.baseApiUrl +
         config.apiKey +
+        "&type=movie" +
         "&s=" +
         this.searchString +
         "&page=" +
         page;
       axios
         .get(url)
-        .then(response => (this.searchResult = response.data))
+        .then(response => {
+            this.searchResult = response.data;
+            this.$store.commit('updateSearchString', this.searchString);
+            this.$store.commit('updateSearchResult', this.searchResult);
+          })
         .catch(error => {
           this.error = error;
         });
@@ -87,6 +92,10 @@ export default {
       }
       return 1;
     }
+  },
+  created(){
+    this.searchString = this.$store.state.searchString;
+    this.searchResult = this.$store.state.searchResult;
   }
 };
 </script>
@@ -120,8 +129,8 @@ export default {
   &__button {
     -webkit-appearance: none;
     border: none;
-    background: blue;
-    border: solid 1px blue;
+    background: $buttonColor;
+    border: solid 1px $buttonColor;
     color: white;
     width: 60px;
 
