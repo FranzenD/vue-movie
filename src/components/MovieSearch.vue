@@ -87,14 +87,6 @@ export default {
       }
       return 1;
     }
-  },
-  watch:{
-    searchString(newValue, oldValue){
-      //Reset page to 1 if new search is made.
-      if(newValue !== oldValue){
-        this.page = 1;
-      }
-    }
   }
 };
 </script>
@@ -194,7 +186,7 @@ export default {
   cursor: pointer;
   box-sizing: border-box;
   margin-right: 5px;
-  
+
   &--active {
     font-size: x-large;
     font-weight: bold;
