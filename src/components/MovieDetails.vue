@@ -14,7 +14,7 @@
     </section>   
     <section class="movie__details">
       <div class="movie__details__plot">{{movie.Plot}}</div>
-      <span class="bold">Actors: </span>
+      <span>Actors: </span>
       {{movie.Actors}}
       <div>
         <span>Directed by: </span>{{movie.Director}}
@@ -100,10 +100,5 @@ export default {
   &__poster {
     grid-area: right;
   }
-}
-
-.card {
-  padding: 20px;
-  border: solid 1px $borderColor;
 }
 </style>

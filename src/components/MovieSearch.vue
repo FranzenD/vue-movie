@@ -1,5 +1,5 @@
 <template>
-<div class="moogle">
+<div class="sigma-movie-search">
   <div class="search-field">
   <div class="movie-search">
     <input type="search" class="movie-search__input" v-model="searchString" @keyup.enter="searchMovie()" />
@@ -67,10 +67,11 @@ export default {
       axios
         .get(url)
         .then(response => {
-            this.searchResult = response.data;
-            this.$store.commit('updateSearchString', this.searchString);
-            this.$store.commit('updateSearchResult', this.searchResult);
-          })
+          this.searchResult = response.data;
+          this.$store.commit("updateSearchString", this.searchString);
+          this.$store.commit("updateSearchResult", this.searchResult);
+          this.$store.commit("updateCurrentPage", page);
+        })
         .catch(error => {
           this.error = error;
         });
@@ -93,15 +94,15 @@ export default {
       return 1;
     }
   },
-  created(){
+  created() {
     this.searchString = this.$store.state.searchString;
     this.searchResult = this.$store.state.searchResult;
+    this.page = this.$store.state.currentPage;
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 .search-field {
   display: flex;
   justify-content: center;

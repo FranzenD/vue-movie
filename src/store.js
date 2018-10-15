@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     searchString: '',
-    searchResult: {}
+    searchResult: {},
+    currentPage: 1
   },
   mutations: {
     updateSearchString(state, value){
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     updateSearchResult(state, result){
       state.searchResult = result;
+    },
+    updateCurrentPage(state, page){
+      state.currentPage = page;
     }
   },
   actions: {
