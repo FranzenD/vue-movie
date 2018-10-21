@@ -134,6 +134,7 @@ export default {
     border: none;
     background: $buttonColor;
     border: solid 1px $buttonColor;
+    outline: solid 1px $buttonColor;
     color: white;
     width: 60px;
 
