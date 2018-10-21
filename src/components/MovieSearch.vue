@@ -68,9 +68,11 @@ export default {
         .get(url)
         .then(response => {
           this.searchResult = response.data;
-          this.$store.commit("updateSearchString", this.searchString);
-          this.$store.commit("updateSearchResult", this.searchResult);
-          this.$store.commit("updateCurrentPage", page);
+          this.$store.dispatch('updateSearch', {
+            searchString: this.searchString,
+            searchResult: this.searchResult,
+            page: this.page
+          });
         })
         .catch(error => {
           this.error = error;

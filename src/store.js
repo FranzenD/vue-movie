@@ -10,17 +10,21 @@ export default new Vuex.Store({
     currentPage: 1
   },
   mutations: {
-    updateSearchString(state, value){
+    updateSearchString(state, value) {
       state.searchString = value;
     },
-    updateSearchResult(state, result){
+    updateSearchResult(state, result) {
       state.searchResult = result;
     },
-    updateCurrentPage(state, page){
+    updateCurrentPage(state, page) {
       state.currentPage = page;
     }
   },
   actions: {
-
+    updateSearch(store, payload) {
+      store.commit("updateSearchString", payload.searchString);
+      store.commit("updateSearchResult", payload.searchResult);
+      store.commit("updateCurrentPage", payload.page);
+    }
   }
 })
