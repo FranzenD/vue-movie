@@ -21,4 +21,4 @@ yarn-error.log*
 *.sw*
 
 # Sensitive data
-src/config.js
+src/config2.js
