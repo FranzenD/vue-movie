@@ -1,35 +1,39 @@
 <template>
-<div class="sigma-movie-search">
-  <div class="search-field">
-  <div class="movie-search">
-    <input type="search" class="movie-search__input" v-model="searchString" @keyup.enter="searchMovie()" />
-    <button type="button" class="movie-search__button" @click="searchMovie()">Search</button>
-  </div>
-  </div>
+  <div class="sigma-movie-search">
+    <div class="search-field">
+      <div class="movie-search">
+        <input
+          type="search"
+          class="movie-search__input"
+          v-model="searchString"
+          @keyup.enter="searchMovie()"
+        >
+        <button type="button" class="movie-search__button" @click="searchMovie()">Search</button>
+      </div>
+    </div>
 
     <div v-if="error" class="error">{{error}}</div>
-    <div v-if="hasError" class="error">
-      {{searchResult.Error}}
-    </div>
-    <div v-if="searchResult && searchResult.Search">      
+    <div v-if="hasError" class="error">{{searchResult.Error}}</div>
+    <div v-if="searchResult && searchResult.Search">
       <div class="search-result">
         <div v-for="(result, index) in searchResult.Search" :key="index" class="movie">
-          <div class='movie__poster'>
-            <img :src='result.Poster' />
+          <div class="movie__poster">
+            <img :src="result.Poster">
           </div>
-          <div class='movie__title'>
+          <div class="movie__title">
             <router-link :to="{name: 'moviedetails', params: {id: result.imdbID}}">{{result.Title}}</router-link>
           </div>
         </div>
       </div>
-      <section class="pager__container">  
-        <span>Page:</span>      
-          <span v-for="pageNumber in totalPages" v-bind:key="pageNumber" 
-            @click="searchMovie(pageNumber)" 
-            class="pager" 
-            :class="{'pager--active':pageNumber === page}">
-              {{pageNumber}}
-          </span>
+      <section class="pager__container">
+        <span>Page:</span>
+        <span
+          v-for="pageNumber in totalPages"
+          v-bind:key="pageNumber"
+          @click="searchMovie(pageNumber)"
+          class="pager"
+          :class="{'pager--active':pageNumber === page}"
+        >{{pageNumber}}</span>
       </section>
       <div class="leader">Number of hits: {{searchResult.totalResults}}</div>
     </div>
@@ -68,7 +72,7 @@ export default {
         .get(url)
         .then(response => {
           this.searchResult = response.data;
-          this.$store.dispatch('updateSearch', {
+          this.$store.dispatch("updateSearch", {
             searchString: this.searchString,
             searchResult: this.searchResult,
             page: this.page
@@ -76,6 +80,7 @@ export default {
         })
         .catch(error => {
           this.error = error;
+          throw error;
         });
     }
   },
