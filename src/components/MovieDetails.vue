@@ -1,34 +1,33 @@
-<template>  
-<div class="details"> 
-  <div v-if='error' class="error">{{error}}</div>
-  <div v-if="showError">
-    {{movie.Error}}
-  </div>
-  <div v-else>
-    <div v-show="!loadingData" class="movie">
-    <section class="movie__title">
-      {{movie.Title}} ({{movie.Year}})           
-    </section>       
-    <section class="movie__poster">
-      <img :src="movie.Poster" class="img-responsive"/>
-    </section>   
-    <section class="movie__details">
-      <div class="movie__details__plot">{{movie.Plot}}</div>
-      <span>Actors: </span>
-      {{movie.Actors}}
-      <div>
-        <span>Directed by: </span>{{movie.Director}}
+<template>
+  <div class="details">
+    <div v-if="error" class="error">{{error}}</div>
+    <div v-if="showError">{{movie.Error}}</div>
+    <div v-else>
+      <div v-show="!loadingData" class="movie">
+        <section class="movie__title">{{movie.Title}} ({{movie.Year}})</section>
+        <section class="movie__poster">
+          <img :src="movie.Poster" class="img-responsive">
+        </section>
+        <section class="movie__details">
+          <div class="movie__details__plot">{{movie.Plot}}</div>
+          <span>Actors:</span>
+          {{movie.Actors}}
+          <div>
+            <span>Directed by:</span>
+            {{movie.Director}}
+          </div>
+          <div>
+            <span>Genre:</span>
+            {{movie.Genre}}
+          </div>
+          <div>
+            <span>Runtime:</span>
+            {{movie.Runtime}}
+          </div>
+        </section>
       </div>
-      <div>
-        <span>Genre: </span>{{movie.Genre}}
-      </div>
-      <div>
-        <span>Runtime: </span>{{movie.Runtime}}
-      </div>
-    </section> 
+    </div>
   </div>
-  </div>
-  </div> 
 </template>
 
 <script>
@@ -54,15 +53,18 @@ export default {
     }
   },
   created() {
-    let url =
-      config.baseApiUrl + config.apiKey + "&i=" + this.movieId + "&plot=full";
+    let url = `${config.baseApiUrl}${config.apiKey}&i=${
+      this.movieId
+    }&plot=full`;
     axios
       .get(url)
       .then(response => {
         this.movie = response.data;
         this.loadingData = false;
       })
-      .catch(error => {this.error = error});
+      .catch(error => {
+        this.error = error;
+      });
   }
 };
 </script>

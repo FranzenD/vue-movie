@@ -60,14 +60,9 @@ export default {
   methods: {
     searchMovie(page) {
       this.page = page || 1;
-      let url =
-        config.baseApiUrl +
-        config.apiKey +
-        "&type=movie" +
-        "&s=" +
-        this.searchString +
-        "&page=" +
-        page;
+      let url = `${config.baseApiUrl}${config.apiKey}&type=movie&s=${
+        this.searchString
+      }&page=${page}`;
       axios
         .get(url)
         .then(response => {
