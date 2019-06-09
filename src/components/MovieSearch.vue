@@ -6,8 +6,7 @@
           type="search"
           class="movie-search__input"
           v-model="searchString"
-          @keyup.enter="searchMovie()"
-        >
+          @keyup.enter="searchMovie()" />
         <button type="button" class="movie-search__button" @click="searchMovie()">Search</button>
       </div>
     </div>
