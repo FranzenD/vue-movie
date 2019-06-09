@@ -31,8 +31,9 @@
           v-bind:key="pageNumber"
           @click="searchMovie(pageNumber)"
           class="pager"
-          :class="{'pager--active':pageNumber === page}"
-        >{{pageNumber}}</span>
+          :class="{'pager--active':pageNumber === page}">
+            {{pageNumber}}
+          </span>
       </section>
       <div class="leader">Number of hits: {{searchResult.totalResults}}</div>
     </div>
